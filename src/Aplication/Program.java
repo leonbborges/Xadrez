@@ -19,7 +19,7 @@ public class Program {
         List<ChessPiece> captured = new ArrayList<>();
 
 
-        while (true){
+        while (!chessMatch.getCheckMate()){
 
            try{
                UI.clearScreen();
@@ -41,6 +41,15 @@ public class Program {
                if(capturedPiece != null){
                    captured.add(capturedPiece);
                }
+               if(chessMatch.getPromotion() != null){
+                   System.out.println("enter piece for promotion (B/N/R/Q): ");
+                   String type = sc.nextLine();
+                   while(!type.equals("B") && !type.equals("N") && !type.equals("R") && !type.equals("Q")){
+                       System.out.println("Invalid value! enter piece for promotion (B/N/R/Q): ");
+                       type = sc.nextLine();
+                   }
+                   chessMatch.repalcePromotionPiece(type);
+               }
            }
            catch (ChessException e){
                System.out.println(e.getMessage());
@@ -52,5 +61,7 @@ public class Program {
            }
 
         }
+        UI.clearScreen();
+        UI.printMatch(chessMatch, captured);
     }
 }
